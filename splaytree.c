@@ -206,6 +206,7 @@ static tree_node_t *__splay(
     /* zig zag right */
     else if ((*pa)->right == next && (*gpa)->left == *pa)
     {
+        // FIXME: tests don't cover this conditional
         __rotate_left(pa);
         __rotate_right(gpa);
     }
