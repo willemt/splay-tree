@@ -3,15 +3,15 @@
  *
  *       Filename:  test_splaytree.c
  *
- *    Description:  
+ *    Description:
  *
  *        Version:  1.0
  *        Created:  07/26/11 22:19:05
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  YOUR NAME (), 
- *        Company:  
+ *         Author:  YOUR NAME (),
+ *        Company:
  *
  * =====================================================================================
  */
@@ -254,4 +254,24 @@ void TestSplaytree_remove_returns_value(
     CuAssertTrue(tc, 2 == (unsigned long) splaytree_remove(st, (void *) 15));
 
     splaytree_free(st);
+}
+
+
+void TestSplaytree_remove_assertion(
+    CuTest * tc
+)
+{
+    splaytree_t *st;
+
+    st = splaytree_initalloc(__mem_compare);
+
+    splaytree_put(st, (void *) 1, (void *) 1);
+    splaytree_put(st, (void *) 2, (void *) 2);
+
+    splaytree_remove(st, (void *) 2);
+    splaytree_remove(st, (void *) 1);
+    CuAssertTrue(tc, 0 == st->count);
+
+    splaytree_free(st);
+
 }
