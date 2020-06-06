@@ -237,7 +237,7 @@ void *splaytree_remove(
     void *val;
 
     /*  make removed node the root */
-    if (!__splay(st, 1, NULL, NULL, (tree_node_t **) &st->root, key))
+    if (!splaytree_get(st, key))
     {
         return NULL;
     }
