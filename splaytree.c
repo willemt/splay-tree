@@ -1,5 +1,5 @@
 /*
- 
+
 Copyright (c) 2011, Willem-Hendrik Thiart
 All rights reserved.
 
@@ -232,7 +232,7 @@ void *splaytree_remove(
     const void *key
 )
 {
-    tree_node_t *root, *left_highest;
+    tree_node_t *root, *tmp;
 
     void *val;
 
@@ -248,28 +248,13 @@ void *splaytree_remove(
     assert(0 < st->count);
     assert(root->key == key);
 
-    /* get left side's most higest value node */
-    if ((left_highest = root->left))
-    {
-        tree_node_t *prev = root;
-
-        while (left_highest->right)
-        {
-            prev = left_highest;
-            left_highest = left_highest->right;
-        }
-
-        /* do the swap */
-        prev->right = NULL;
-        st->root = left_highest;
-        left_highest->left = root->left;
-        left_highest->right = root->right;
-    }
-    /* there is no left */
-    else
-    {
-        assert(root);
+    if (root->left == 0) {
         st->root = root->right;
+    } else {
+        tmp = root->right;
+        st->root = root->left;
+        __splay(st, 1, NULL, NULL, (tree_node_t **) &st->root, key);
+        ((tree_node_t *) st->root)->right = tmp;
     }
 
     st->count--;
